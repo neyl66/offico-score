@@ -76,10 +76,6 @@
 			<div class="container">
 				<h2 clas="mb-3">Skóre se zobrazuje od {{ convert_unix_to_date(timeframe) }}</h2>
 
-				<h2>{{settings.matches_count}}</h2>
-
-				<p>{{last_matches_url}}</p>
-
 				<button class="btn btn-outline-primary" v-on:click="slide_toggle('timeframe')">Změnit datum a čas</button>
 
 				<div class="timeframe slide-toggle my-3">
