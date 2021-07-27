@@ -74,8 +74,11 @@
 
 		<section class="pt-5">
 			<div class="container">
-
 				<h2 clas="mb-3">Skóre se zobrazuje od {{ convert_unix_to_date(timeframe) }}</h2>
+
+				<h2>{{settings.matches_count}}</h2>
+
+				<p>{{last_matches_url}}</p>
 
 				<button class="btn btn-outline-primary" v-on:click="slide_toggle('timeframe')">Změnit datum a čas</button>
 
@@ -121,8 +124,8 @@
 		</section>
 	</main>
 
-	<script src="./data/js/vue.js"></script>
+	<script src="./data/js/vue.min.js"></script>
 	<script src="./data/js/vue2-datepicker.min.js"></script>
-	<script src="./data/js/scripts.min.js"></script>
+	<script src="./data/js/scripts.min.js?v=1.0"></script>
 </body>
 </html>

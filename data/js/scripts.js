@@ -13,6 +13,7 @@ const app = new Vue({
         settings: {
             steam_id: "76561198020969037",
             matches_count: "35",
+            hours_minus: 14,
         },
         endpoints: {
             "last_matches": "https://aoe2.net/api/player/matches?game=aoe2de",
@@ -38,26 +39,29 @@ const app = new Vue({
 
         this.get_url_info();
 
+        this.change_hours();
+
         this.get_score();
         this.start_periodic_check();
 
     },
     computed: {
-        datetime: function() {
-            return Date.now();
-        },
         last_matches_url: function() {
             return `${this.endpoints.last_matches}&steam_id=${this.settings.steam_id}&count=${this.settings.matches_count}`;
         },
     },
     methods: {
         get_url_info() {
-            const url = new URL(window.location.href);
-            const search_params = new URLSearchParams(url.search);
+            const current_url = new URL(window.location.href);
+            const search_params = new URLSearchParams(current_url.search);
 
-            if (search_params.has("steam_id")) {
-                const steam_id = search_params.get("steam_id");
-                this.settings.steam_id = steam_id;
+            const params = ["steam_id", "hours_minus", "matches_count"];
+
+            // Apply found url params to settings.
+            for (let param of params) {
+                if (search_params.has(param)) {
+                    this.settings[param] = search_params.get(param);
+                }
             }
 
         },
@@ -74,6 +78,14 @@ const app = new Vue({
             let date_string = date.toLocaleString();
 
             return date_string;
+        },
+        change_hours() {
+                
+            const hours_minus = this.settings.hours_minus;
+
+            const timeframe_object = new Date(this.timeframe);
+            timeframe_object.setHours(timeframe_object.getHours() - hours_minus);
+            this.timeframe = Date.parse(timeframe_object);
         },
         async get_last_matches() {
 
